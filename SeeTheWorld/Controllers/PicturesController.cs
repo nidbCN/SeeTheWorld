@@ -1,7 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SeeTheWorld.Services;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using AutoMapper;
+using SeeTheWorld.Dto;
+using SeeTheWorld.Entities;
+using SeeTheWorld.Services;
 
 namespace SeeTheWorld.Controllers
 {
@@ -9,24 +15,37 @@ namespace SeeTheWorld.Controllers
     [Route("[controller]")]
     public class PicturesController : ControllerBase
     {
-        public ILogger<PicturesController> Logger { get; }
-        public IPictureService PictureService { get; }
+        private ILogger<PicturesController> Logger { get; }
+        private IPictureService PictureService { get; }
 
+        private IMapper Mapper { get; }
 
-        public PicturesController(ILogger<PicturesController> logger, IPictureService pictureService)
+        public PicturesController(ILogger<PicturesController> logger, IPictureService pictureService, IMapper mapper)
         {
             Logger = logger
-                ?? throw new  ArgumentNullException(nameof(logger));
+                     ?? throw new ArgumentNullException(nameof(logger));
             PictureService = pictureService
                              ?? throw new ArgumentNullException(nameof(pictureService));
+            Mapper = mapper
+                     ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
-        public IActionResult GetPictures([FromQuery]uint? number)
+        public async Task<ActionResult<IEnumerable<PictureDto>>> GetPictures([FromQuery] uint? number)
         {
-            return number == null
-                ? Ok(PictureService.GetPicture())
-                : Ok(PictureService.GetPictures((uint) number));
+            Logger.LogInformation($"Match method {nameof(GetPictures)}");
+            var pictures = 
+                await PictureService.GetPictures(number ?? 1);
+            return Ok(
+                Mapper.Map<IEnumerable<PictureDto>>(pictures)
+            );
+        }
+
+        public IActionResult PostPicture([FromBody] PictureDto picture)
+        {
+            Logger.LogInformation($"Match method {nameof(PostPicture)}");
+            PictureService.PutPicture(Mapper.Map<PictureEntity>(picture));
+            return NoContent();
         }
 
     }

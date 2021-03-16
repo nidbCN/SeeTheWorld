@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using SeeTheWorld.Models;
+using SeeTheWorld.Contexts;
 using SeeTheWorld.Services;
 
 namespace SeeTheWorld
@@ -21,9 +23,13 @@ namespace SeeTheWorld
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<AppConfig>(
-                Configuration.GetSection("AppConfig")
-            );
+            services.AddDbContext<SeeTheWorldContext>(opt =>
+                opt.UseSqlite(
+                    Configuration.GetConnectionString("SqLite"))
+                );
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IPictureService, PictureService>();
 
             services.AddControllers();
@@ -39,11 +45,12 @@ namespace SeeTheWorld
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SeeTheWorld v1"));
             }
 
-            app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SeeTheWorld v1"));
+
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
