@@ -41,6 +41,7 @@ namespace SeeTheWorld.Controllers
             );
         }
 
+        [HttpPost]
         public IActionResult PostPicture([FromBody] PictureDto picture)
         {
             Logger.LogInformation($"Match method {nameof(PostPicture)}");

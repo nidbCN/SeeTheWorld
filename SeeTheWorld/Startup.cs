@@ -48,7 +48,9 @@ namespace SeeTheWorld
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SeeTheWorld v1"));
+            app.UseSwaggerUI(opt => 
+                opt.SwaggerEndpoint( Configuration["AppConfig:UrlBase"] + "/swagger/v1/swagger.json", "SeeTheWorld v1")
+            );
 
             // app.UseHttpsRedirection();
 
