@@ -33,11 +33,12 @@
 
 ## 构建
 
-建议使用Visual Studio 发布适用的版本。或在系统上使用dotnet CLI构建。自带的
+建议使用Visual Studio 发布适用的版本。或在系统上使用dotnet CLI构建。自带的脚本仅用于构建Ubuntu下的程序
+可以参考进行修改
 
 ## Docker
 
-
+`./run-docker.sh``
 
 ## LICENSE
 
