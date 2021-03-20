@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+
 using SeeTheWorld.Contexts;
 using SeeTheWorld.Services;
 
@@ -16,9 +17,11 @@ namespace SeeTheWorld
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            BaseUrl = Configuration["AppConfig:BaseUrl"];
         }
 
         public IConfiguration Configuration { get; }
+        public string BaseUrl { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -35,7 +38,9 @@ namespace SeeTheWorld
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SeeTheWorld", Version = "v1" });
+                c.AddServer(new OpenApiServer { Url = BaseUrl});
+
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SeeTheWorld", Version = "v1"});
             });
         }
 
@@ -47,13 +52,16 @@ namespace SeeTheWorld
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger();
-            app.UseSwaggerUI(opt =>
-                opt.SwaggerEndpoint(
-                    Configuration["AppConfig:BaseUrl"] ?? ""
-                    + "/swagger/v1/swagger.json", "SeeTheWorld v1"
-                )
+            app.UseSwagger(
+                opt=>opt.RouteTemplate = $"{BaseUrl}/docs/{{documentName}}/swagger.json"
             );
+            
+            app.UseSwaggerUI(opt =>
+            {
+                opt.RoutePrefix = BaseUrl; 
+
+                opt.SwaggerEndpoint($"/{BaseUrl}/docs/v1/swagger.json", "SeeTheWorld v1");
+            });
 
             // app.UseHttpsRedirection();
 

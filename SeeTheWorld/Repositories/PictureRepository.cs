@@ -10,7 +10,7 @@ using SeeTheWorld.Entities;
 namespace SeeTheWorld.Repositories
 {
     public class PictureRepository : IPictureRepository
-    { 
+    {
         private SeeTheWorldContext Context { get; }
         public PictureRepository(SeeTheWorldContext context)
         {
