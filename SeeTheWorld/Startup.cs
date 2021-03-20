@@ -53,7 +53,7 @@ namespace SeeTheWorld
             }
 
             app.UseSwagger(
-                opt => opt.RouteTemplate = $"{BaseUrl}/docs/{{documentName}}/swagger.json"
+                opt => opt.RouteTemplate = $"/{BaseUrl}/docs/{{documentName}}/swagger.json"
             );
 
             app.UseSwaggerUI(opt =>
