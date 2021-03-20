@@ -32,15 +32,15 @@ namespace SeeTheWorld
                 );
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+            services.AddLogging();
             services.AddScoped<IPictureService, PictureService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.AddServer(new OpenApiServer { Url = BaseUrl});
-
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SeeTheWorld", Version = "v1"});
+                // 更改请求的URL
+                c.AddServer(new OpenApiServer { Url = BaseUrl });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SeeTheWorld", Version = "v1" });
             });
         }
 
@@ -53,13 +53,11 @@ namespace SeeTheWorld
             }
 
             app.UseSwagger(
-                opt=>opt.RouteTemplate = $"{BaseUrl}/docs/{{documentName}}/swagger.json"
+                opt => opt.RouteTemplate = $"{BaseUrl}/docs/{{documentName}}/swagger.json"
             );
-            
+
             app.UseSwaggerUI(opt =>
             {
-                opt.RoutePrefix = BaseUrl; 
-
                 opt.SwaggerEndpoint($"/{BaseUrl}/docs/v1/swagger.json", "SeeTheWorld v1");
             });
 

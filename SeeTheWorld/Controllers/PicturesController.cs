@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,8 +15,19 @@ namespace SeeTheWorld.Controllers
     [Route("/[controller]")]
     public class PicturesController : ControllerBase
     {
+        /// <summary>
+        /// 日志
+        /// </summary>
         private ILogger<PicturesController> Logger { get; }
+        
+        /// <summary>
+        /// 图片服务
+        /// </summary>
         private IPictureService PictureService { get; }
+        
+        /// <summary>
+        /// Dto映射
+        /// </summary>
         private IMapper Mapper { get; }
 
         public PicturesController(ILogger<PicturesController> logger, IPictureService pictureService, IMapper mapper)
