@@ -7,10 +7,13 @@ else
     rm -rf /Release/*
 fi
 
-echo "Build Application."
+echo "[1]Update database."
+dotnet ef database update --project SeeTheWorld
+
+echo "[2]Build Application."
 dotnet publish --no-self-contained -c Release -r ubuntu.20.04-x64 -o ./Release
 
-echo "Copy Files."
+echo "[3]Copy Files."
 cp SeeTheWorld/Pictures.db Release/Pictures.db
 
-echo "Ok."
+echo "[4]Ok."
