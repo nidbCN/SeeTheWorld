@@ -17,7 +17,15 @@ namespace SeeTheWorld
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            BaseUrl = Configuration["AppConfig:BaseUrl"];
+            var baseUrlConfig = Configuration["AppConfig:BaseUrl"];
+            if (string.IsNullOrWhiteSpace(baseUrlConfig))
+            {
+                BaseUrl = string.Empty;
+            }
+            else if (!baseUrlConfig.StartsWith('/'))
+            {
+                BaseUrl = "/" + baseUrlConfig;
+            }
         }
 
         public IConfiguration Configuration { get; }
