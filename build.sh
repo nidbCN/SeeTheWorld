@@ -8,7 +8,7 @@ else
 fi
 
 echo "Build Application."
-dotnet publish -c Release -r ubuntu.20.04-x64 -o ./Release
+dotnet publish --no-self-contained -c Release -r ubuntu.20.04-x64 -o ./Release
 
 echo "Copy Files."
 cp SeeTheWorld/Pictures.db Release/Pictures.db
