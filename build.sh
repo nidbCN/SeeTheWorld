@@ -9,7 +9,7 @@ fi
 
 echo "[1]Update database."
 rm -f SeeTheWorld/Pictures.db
-dotnet ef database update --project SeeTheWorld
+$HOME/.dotnet/tools/dotnet-ef database update --project SeeTheWorld
 
 echo "[2]Build Application."
 dotnet publish --no-self-contained -c Release -r ubuntu.20.04-x64 -o ./Release
