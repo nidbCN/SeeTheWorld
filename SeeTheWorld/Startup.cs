@@ -53,12 +53,12 @@ namespace SeeTheWorld
             }
 
             app.UseSwagger(
-                opt => opt.RouteTemplate = $"/{BaseUrl}/docs/{{documentName}}/swagger.json"
+                opt => opt.RouteTemplate = $"/docs/{{documentName}}/swagger.json"
             );
 
             app.UseSwaggerUI(opt =>
             {
-                opt.SwaggerEndpoint($"/{BaseUrl}/docs/v1/swagger.json", "SeeTheWorld v1");
+                opt.SwaggerEndpoint($"/docs/v1/swagger.json", "SeeTheWorld v1");
             });
 
             // app.UseHttpsRedirection();
