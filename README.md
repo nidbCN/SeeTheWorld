@@ -4,6 +4,18 @@
 
 # 配置
 
+请先安装dotnet SDK和`EF Core 工具`
+参考以下命令(Ubuntu 20.10):
+```sh
+wget https://packages.microsoft.com/config/ubuntu/20.10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+sudo apt-get update; \
+  sudo apt-get install -y apt-transport-https && \
+  sudo apt-get update && \
+  sudo apt-get install -y dotnet-sdk-5.0
+dotnet tool install --global dotnet-ef
+```
+
 配置文件`appsetting.json`：
 ```json
 {
@@ -38,7 +50,7 @@
 
 ## Docker
 
-`./run-docker.sh``
+`./run-docker.sh`
 
 ## LICENSE
 

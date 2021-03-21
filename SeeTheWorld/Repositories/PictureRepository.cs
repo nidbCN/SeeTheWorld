@@ -20,8 +20,24 @@ namespace SeeTheWorld.Repositories
 
         public async Task<IEnumerable<PictureEntity>> GetPictures(uint count = 1)
         {
+
             var countInt = (int)count;
-            return await Context.Pictures.OrderBy(x => Guid.NewGuid()).Take(countInt).ToListAsync();
+            var dataCount = Context.Pictures.Count();
+            
+            if (countInt >= dataCount)
+            {
+                return await Context.Pictures.ToListAsync();
+            }
+
+            var rand = new Random().Next(0, dataCount - countInt);
+
+            var result = 
+                from pictures in Context.Pictures
+                where pictures.Id >= rand
+                select pictures;
+
+            
+            return await result.ToListAsync();
         }
 
         public void PutPicture(PictureEntity pictureIn)
