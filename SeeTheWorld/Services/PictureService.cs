@@ -1,46 +1,24 @@
-﻿using Microsoft.Extensions.Options;
-using SeeTheWorld.Dto;
-using SeeTheWorld.Models;
-using SeeTheWorld.Repositories;
-using System;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
+
+using SeeTheWorld.Contexts;
+using SeeTheWorld.Entities;
+using SeeTheWorld.Repositories;
 
 namespace SeeTheWorld.Services
 {
     public class PictureService : IPictureService
     {
-        public  IPictureFileRepository PictureFileRepository { get; set; }
-        public IOptions<AppConfig> Options { get; set; }
-        public PictureService(IOptions<AppConfig> options)
+        private IPictureRepository PictureRepository { get; }
+        public PictureService(SeeTheWorldContext context)
         {
-            Options = options
-                      ?? throw new ArgumentNullException(nameof(options));
-            PictureFileRepository = new PictureFileRepository(options);
-        }
-        public PictureItem GetPicture()
-        {
-            var name = PictureFileRepository.RandomFileName();
-            return new PictureItem()
-            {
-                Url = Options.Value.UrlBase + name
-            };
+            PictureRepository = new PictureRepository(context);
         }
 
-        public ICollection<PictureItem> GetPictures(uint number)
-        {
-            var pictures = new List<PictureItem>();
-            for (var i = 0; i < number; i++)
-            {
-                var name = PictureFileRepository.RandomFileName();
-                pictures.Add(
-                    new PictureItem()
-                    {
-                        Url = Options.Value.UrlBase + name
-                    }
-                );
-            }
+        public async Task<IEnumerable<PictureEntity>> GetPictures(uint number = 1)
+            => await PictureRepository.GetPictures(number);
 
-            return pictures;
-        }
+        public void PutPicture(PictureEntity pictureIn)
+            => PictureRepository.PutPicture(pictureIn);
     }
 }
