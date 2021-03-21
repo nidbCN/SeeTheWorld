@@ -58,7 +58,8 @@ namespace SeeTheWorld
 
             app.UseSwaggerUI(opt =>
             {
-                opt.SwaggerEndpoint($"/docs/v1/swagger.json", "SeeTheWorld v1");
+                opt.RoutePrefix = "docs";
+                opt.SwaggerEndpoint($"v1/swagger.json", "SeeTheWorld v1");
             });
 
             // app.UseHttpsRedirection();
