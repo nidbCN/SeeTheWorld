@@ -45,7 +45,7 @@ namespace SeeTheWorld.Controllers
         {
             Logger.LogInformation($"Match method {nameof(GetPictures)}");
             var pictures = 
-                await PictureService.GetPictures(number ?? 1);
+                await PictureService.GetPictures(number ?? 1 );
             return Ok(
                 Mapper.Map<IEnumerable<PictureDto>>(pictures)
             );

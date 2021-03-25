@@ -31,12 +31,10 @@ namespace SeeTheWorld.Repositories
 
             var rand = new Random().Next(0, dataCount - countInt);
 
-            var result = 
-                from pictures in Context.Pictures
-                where pictures.Id >= rand
-                select pictures;
+            var result =
+                Context.Pictures
+                    .Where(it => it.Id == rand).Take(countInt);
 
-            
             return await result.ToListAsync();
         }
 
