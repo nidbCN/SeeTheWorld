@@ -7,6 +7,9 @@ COPY . /public
 # Set Workdir
 WORKDIR /public
 
+# Set timezone
+RUN timedatectl set-timezone 'Asia/Shanghai'
+
 # Expose Port 80
 EXPOSE 80
 
