@@ -29,7 +29,7 @@ namespace SeeTheWorld.Repositories
                 return await Context.Pictures.ToListAsync();
             }
 
-            var rand = new Random().Next(0, dataCount - countInt);
+            var rand = new Random().Next(1, dataCount - countInt);
 
             var result =
                 Context.Pictures
