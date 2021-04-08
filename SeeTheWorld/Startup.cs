@@ -34,10 +34,26 @@ namespace SeeTheWorld
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<SeeTheWorldContext>(opt =>
-                opt.UseSqlite(
-                    Configuration.GetConnectionString("SqLite"))
-                );
+            services.AddDbContext<SeeTheWorldContext>(options =>
+            {
+                var dbType =
+                    Configuration.GetSection("DataBase")?.Value ?? "SqLite";
+                var connStr = Configuration.GetConnectionString(dbType);
+
+                switch (dbType.ToLower())
+                {
+                    case "postgresql":
+                        options.UseNpgsql(connStr);
+                        break;
+                    // case "mysql":
+                    //     options.UseMySQL(connStr);
+                    //     break;
+                    default:
+                        options.UseSqlite(connStr);
+                        break;
+                }
+            });
+
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddLogging();

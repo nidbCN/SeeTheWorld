@@ -19,7 +19,6 @@ dotnet tool install --global dotnet-ef
 配置文件`appsetting.json`：
 ```json
 {
-    // 日志配置
   "Logging": {
     "LogLevel": {
       "Default": "Information",
@@ -27,11 +26,9 @@ dotnet tool install --global dotnet-ef
       "Microsoft.Hosting.Lifetime": "Information"
     }
   },
-  // 连接字符串
   "ConnectionStrings": {
     "SqLite": "Data Source=Pictures.db; "
   },
-  // 程序配置
     "AppConfig": {
       "BaseUrl": "test"
   },
