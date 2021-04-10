@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SeeTheWorld.Entities
 {
     public class PictureEntity
     {
-        public uint Id { get; set; }
+        [NotNull]
+        public int Id { get; set; }
         public DateTime DumpTime { get; set; }
         public string Title { get; set; }
         

@@ -24,7 +24,7 @@ namespace SeeTheWorld.Controllers
         /// 图片服务
         /// </summary>
         private IPictureService PictureService { get; }
-        
+
         /// <summary>
         /// Dto映射
         /// </summary>
