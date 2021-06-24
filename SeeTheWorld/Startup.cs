@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 using SeeTheWorld.Contexts;
+using SeeTheWorld.Repositories;
 using SeeTheWorld.Services;
 
 namespace SeeTheWorld
@@ -57,6 +58,8 @@ namespace SeeTheWorld
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddLogging();
+
+            services.AddSingleton<IPictureRepository, PictureRepository>();
             services.AddScoped<IPictureService, PictureService>();
 
             services.AddControllers();

@@ -11,10 +11,10 @@ namespace SeeTheWorld.Repositories
 {
     public class PictureRepository : IPictureRepository
     {
-        private SeeTheWorldContext Context { get; }
+        private readonly SeeTheWorldContext _context;
         public PictureRepository(SeeTheWorldContext context)
         {
-            Context = context
+            _context = context
                       ?? throw new ArgumentNullException(nameof(context));
         }
 
@@ -22,17 +22,17 @@ namespace SeeTheWorld.Repositories
         {
 
             var countInt = (int)count;
-            var dataCount = Context.Pictures.Count();
+            var dataCount = _context.Pictures.Count();
             
             if (countInt >= dataCount)
             {
-                return await Context.Pictures.ToListAsync();
+                return await _context.Pictures.ToListAsync();
             }
 
             var rand = new Random().Next(1, dataCount - countInt);
 
             var result =
-                Context.Pictures
+                _context.Pictures
                     .Where(it => it.Id == rand).Take(countInt);
 
             return await result.ToListAsync();
@@ -40,8 +40,8 @@ namespace SeeTheWorld.Repositories
 
         public void PutPicture(PictureEntity pictureIn)
         {
-            Context.Pictures.Add(pictureIn);
-            Context.SaveChanges();
+            _context.Pictures.Add(pictureIn);
+            _context.SaveChanges();
         }
     }
 }
