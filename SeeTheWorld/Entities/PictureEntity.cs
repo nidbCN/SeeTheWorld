@@ -7,7 +7,7 @@ namespace SeeTheWorld.Entities
     {
         public uint Id { get; set; }
         public DateTime DumpTime { get; set; }
-        public string Title { get; set; }
+        public string Info { get; set; }
         
         [Url]
         public string Url { get; set; }
