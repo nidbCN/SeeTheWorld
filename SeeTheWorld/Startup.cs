@@ -39,7 +39,6 @@ namespace SeeTheWorld
                     Configuration.GetConnectionString("SqLite"))
                 );
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddLogging();
             services.AddScoped<IPictureService, PictureService>();
 

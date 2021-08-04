@@ -3,8 +3,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-using AutoMapper;
 using SeeTheWorld.Dto;
 using SeeTheWorld.Entities;
 using SeeTheWorld.Services;
@@ -25,22 +23,14 @@ namespace SeeTheWorld.Controllers
         /// </summary>
         private readonly IPictureService _pictureService;
 
-        /// <summary>
-        /// Dto映射
-        /// </summary>
-        private readonly IMapper _mapper;
-
         public PicturesController(
             ILogger<PicturesController> logger, 
-            IPictureService pictureService, 
-            IMapper mapper)
+            IPictureService pictureService)
         {
             _logger = logger
                      ?? throw new ArgumentNullException(nameof(logger));
             _pictureService = pictureService
                              ?? throw new ArgumentNullException(nameof(pictureService));
-            _mapper = mapper
-                     ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
@@ -49,16 +39,16 @@ namespace SeeTheWorld.Controllers
             _logger.LogInformation($"Match method {nameof(GetPictures)}");
             var pictures = 
                 await _pictureService.GetPictures(number ?? 1);
-            return Ok(
-                _mapper.Map<IEnumerable<PictureDto>>(pictures)
-            );
+            
+            
+            return Ok();
         }
 
         [HttpPost]
         public IActionResult PostPicture([FromBody] PictureDto picture)
         {
             _logger.LogInformation($"Match method {nameof(PostPicture)}");
-            _pictureService.PutPicture(_mapper.Map<PictureEntity>(picture));
+            _pictureService.PutPicture(null);
             return NoContent();
         }
 
