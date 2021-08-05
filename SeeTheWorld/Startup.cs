@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 
 using SeeTheWorld.Contexts;
 using SeeTheWorld.Services;
+using SLMapper.Extensions;
 
 namespace SeeTheWorld
 {
@@ -40,6 +41,8 @@ namespace SeeTheWorld
                 );
 
             services.AddLogging();
+
+            services.AddMapper();
             services.AddScoped<IPictureService, PictureService>();
 
             services.AddControllers();

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using SeeTheWorld.Dto;
 using SeeTheWorld.Entities;
 using SeeTheWorld.Services;
+using SLMapper.Interfaces;
+using System.Linq;
 
 namespace SeeTheWorld.Controllers
 {
@@ -23,32 +25,43 @@ namespace SeeTheWorld.Controllers
         /// </summary>
         private readonly IPictureService _pictureService;
 
+        private readonly IMapper _mapper;
+
         public PicturesController(
-            ILogger<PicturesController> logger, 
-            IPictureService pictureService)
+            ILogger<PicturesController> logger,
+            IPictureService pictureService,
+            IMapper mapper)
         {
             _logger = logger
                      ?? throw new ArgumentNullException(nameof(logger));
             _pictureService = pictureService
                              ?? throw new ArgumentNullException(nameof(pictureService));
+            _mapper = mapper
+                ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PictureDto>>> GetPictures([FromQuery] uint? number)
         {
             _logger.LogInformation($"Match method {nameof(GetPictures)}");
-            var pictures = 
+            
+            var pictures =
                 await _pictureService.GetPictures(number ?? 1);
-            
-            
-            return Ok();
+
+
+            return Ok(
+                pictures.Select(x =>
+                    _mapper.MapBack<PictureDto, PictureEntity>(x)));
         }
 
         [HttpPost]
         public IActionResult PostPicture([FromBody] PictureDto picture)
         {
             _logger.LogInformation($"Match method {nameof(PostPicture)}");
-            _pictureService.PutPicture(null);
+            
+            _pictureService.PutPicture(
+                _mapper.MapTo<PictureDto,PictureEntity>(picture));
+
             return NoContent();
         }
 

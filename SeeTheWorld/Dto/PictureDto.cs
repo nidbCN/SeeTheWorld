@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using SLMapper.Interfaces;
 using SeeTheWorld.Entities;
-using SeeTheWorld.Interfaces;
 
 namespace SeeTheWorld.Dto
 {
-    public class PictureDto : IMapable<PictureDto, PictureEntity>
+    public class PictureDto : IMapable<PictureEntity>
     {
         /// <summary>
         /// 存储时间
@@ -24,19 +24,19 @@ namespace SeeTheWorld.Dto
         [Url]
         public string Url { get; set; }
 
-        public void MapFrom(PictureEntity source)
+        public void MapFrom(PictureEntity src)
         {
-            DumpTime = source.DumpTime;
-            Info = source.Info;
-            Url = source.Url;
+            DumpTime = src.DumpTime;
+            Info = src.Info;
+            Url = src.Url;
         }
 
-        public PictureEntity MapTo(PictureDto source) =>
+        public PictureEntity MapTo() =>
             new()
             {
-                DumpTime = source.DumpTime,
-                Info = source.Info,
-                Url = source.Url
+                DumpTime = DumpTime,
+                Info = Info,
+                Url = Url
             };
     }
 }
