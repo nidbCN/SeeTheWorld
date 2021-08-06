@@ -12,7 +12,7 @@ namespace SeeTheWorld.Services
         /// </summary>
         /// <param name="number">数量</param>
         /// <returns></returns>
-        Task<IEnumerable<PictureEntity>> GetPictures(uint number = 1);
+        Task<IEnumerable<PictureEntity>> GetPictures(uint? number);
 
         /// <summary>
         /// 添加图片

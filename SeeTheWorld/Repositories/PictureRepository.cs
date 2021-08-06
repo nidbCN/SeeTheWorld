@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-
+using Microsoft.EntityFrameworkCore;
 using SeeTheWorld.Contexts;
 using SeeTheWorld.Entities;
 
@@ -11,21 +10,21 @@ namespace SeeTheWorld.Repositories
 {
     public class PictureRepository : IPictureRepository
     {
-        private SeeTheWorldContext Context { get; }
+        private readonly SeeTheWorldContext _context;
         public PictureRepository(SeeTheWorldContext context)
         {
-            Context = context
+            _context = context
                       ?? throw new ArgumentNullException(nameof(context));
         }
 
         public void PutPicture(PictureEntity pictureIn)
         {
-            Context.Pictures.Add(pictureIn);
-            Context.SaveChanges();
+            _context.Pictures.Add(pictureIn);
+            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<PictureEntity>> GetAllAsync() =>
-            await Context.Pictures.ToArrayAsync();
+            await _context.Pictures.ToArrayAsync();
 
         public async Task<IEnumerable<PictureEntity>> RandomAsync(int count)
         {
@@ -35,14 +34,14 @@ namespace SeeTheWorld.Repositories
             if (count == 0)
                 return Array.Empty<PictureEntity>();
 
-            var dataCount = Context.Pictures.Count();
+            var dataCount = _context.Pictures.Count();
             if (count >= dataCount)
                 return await GetAllAsync();
 
             var rand = new Random().Next(0, dataCount - count);
 
             var result =
-                from pictures in Context.Pictures
+                from pictures in _context.Pictures
                 where pictures.Id >= rand
                 select pictures;
 
