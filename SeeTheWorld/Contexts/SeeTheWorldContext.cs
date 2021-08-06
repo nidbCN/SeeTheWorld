@@ -17,6 +17,10 @@ namespace SeeTheWorld.Contexts
         {
             modelBuilder.Entity<PictureEntity>()
                 .HasKey(it => it.Id);
+
+            modelBuilder.Entity<PictureEntity>()
+                .Property(it => it.Id)
+                .IsRequired();
         }
     }
 }

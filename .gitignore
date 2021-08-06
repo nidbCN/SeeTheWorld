@@ -1,3 +1,7 @@
+
+
+*.db
+
 *~
 
 # temporary files which can be created if a process still has a handle open of a deleted file
@@ -1017,3 +1021,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+SeeTheWorld/Pictures.db

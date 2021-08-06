@@ -9,6 +9,7 @@ fi
 
 echo "[1]Update database."
 rm -f SeeTheWorld/Pictures.db
+$HOME/.dotnet/tools/dotnet-ef migrations add InitialCreate --project SeeTheWorld
 $HOME/.dotnet/tools/dotnet-ef database update --project SeeTheWorld
 
 echo "[2]Build Application."
