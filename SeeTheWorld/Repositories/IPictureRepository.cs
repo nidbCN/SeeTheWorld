@@ -6,12 +6,9 @@ namespace SeeTheWorld.Repositories
 {
     public interface IPictureRepository
     {
-        /// <summary>
-        /// 获取图片数组
-        /// </summary>
-        /// <param name="count">总数，默认为1</param>
-        /// <returns></returns>
-        Task<IEnumerable<PictureEntity>> GetPictures(uint count = 1);
+        Task<IEnumerable<PictureEntity>> GetAllAsync();
+
+        Task<IEnumerable<PictureEntity>> RandomAsync(int count);
 
         /// <summary>
         /// 存储单个图片

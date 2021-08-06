@@ -15,7 +15,7 @@ namespace SeeTheWorld.Services
             PictureRepository = new PictureRepository(context);
         }
 
-        public async Task<IEnumerable<PictureEntity>> GetPictures(uint number = 1)
+        public async Task<IEnumerable<PictureEntity>> GetPictures(uint number)
             => await PictureRepository.GetPictures(number);
 
         public void PutPicture(PictureEntity pictureIn)
