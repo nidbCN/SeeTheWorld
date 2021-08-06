@@ -44,7 +44,7 @@ namespace SeeTheWorld
                 _ = dbType.ToLower() switch
                 {
                     "postgresql" => opt.UseNpgsql(connStr),
-                    "sqlite" or _ => opt.UseSqlite(connStr),
+                    _ => opt.UseSqlite(connStr),
                 };
 
             });
