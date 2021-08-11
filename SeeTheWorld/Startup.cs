@@ -39,7 +39,7 @@ namespace SeeTheWorld
 
             services.AddDbContext<SeeTheWorldContext>(opt =>
             {
-                var connStr = Configuration.GetConnectionString("PostgreSql");
+                var connStr = Configuration.GetConnectionString(dbType);
 
                 _ = dbType.ToLower() switch
                 {
