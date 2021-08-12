@@ -17,8 +17,8 @@ namespace SeeTheWorld.Extensions
             if (count >= dataCount)
                 return source;
 
-            // [0, dataCount - count)
-            var indexRand = new Random().Next(0, dataCount - count);
+            // [0, dataCount - count + 1)
+            var indexRand = new Random().Next(0, dataCount - count + 1);
             return source.Skip(indexRand).Take(count);
         }
     }
