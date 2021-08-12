@@ -46,7 +46,7 @@ namespace SeeTheWorld.Controllers
             _logger.LogInformation($"Match method {nameof(GetPictures)}");
             
             var pictures =
-                await _pictureService.GetPictures(number ?? 1);
+                await _pictureService.GetPictures(number);
 
 
             return Ok(
