@@ -7,4 +7,4 @@ echo "[II]Copy Dockerfile."
 cp Dockerfile Release/Dockerfile
  
 echo "[III]Build Docker Image."
-docker build -t see-the-world:1.4.2 Release/ 
+docker build -t see-the-world:1.4.3 Release/ 
