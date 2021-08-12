@@ -30,7 +30,6 @@ namespace SeeTheWorld.Repositories
         {
             if (count < 0)
                 throw new ArgumentOutOfRangeException(nameof(count));
-
             if (count == 0)
                 return Array.Empty<PictureEntity>();
 
@@ -38,12 +37,8 @@ namespace SeeTheWorld.Repositories
             if (count >= dataCount)
                 return await GetAllAsync();
 
-            var rand = new Random().Next(0, dataCount - count);
-
-            var result =
-                from pictures in _context.Pictures
-                where pictures.Id >= rand
-                select pictures;
+            var indexRand = new Random().Next(0, dataCount - count);
+            var result = _context.Pictures.Skip(indexRand).Take(count);
 
             return await result.ToListAsync();
         }
