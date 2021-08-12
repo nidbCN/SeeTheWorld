@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using SeeTheWorld.Contexts;
 using SeeTheWorld.Entities;
+using SeeTheWorld.Extensions;
 
 namespace SeeTheWorld.Repositories
 {
@@ -33,14 +34,7 @@ namespace SeeTheWorld.Repositories
             if (count == 0)
                 return Array.Empty<PictureEntity>();
 
-            var dataCount = _context.Pictures.Count();
-            if (count >= dataCount)
-                return await GetAllAsync();
-
-            var indexRand = new Random().Next(0, dataCount - count);
-            var result = _context.Pictures.Skip(indexRand).Take(count);
-
-            return await result.ToListAsync();
+            return await _context.Pictures.Random(count).ToArrayAsync();
         }
     }
 }
