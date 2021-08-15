@@ -10,7 +10,7 @@ namespace SeeTheWorld.Dto
         /// <summary>
         /// 存储时间
         /// </summary>
-        public DateTime DumpTime { get; set; }
+        public DateTime? DumpTime { get; set; }
 
         /// <summary>
         /// 标题
@@ -34,7 +34,7 @@ namespace SeeTheWorld.Dto
         public PictureEntity MapTo() =>
             new()
             {
-                DumpTime = DumpTime,
+                DumpTime = DumpTime ?? DateTime.Now,
                 Info = Info,
                 Url = Url
             };
